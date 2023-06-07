@@ -2,15 +2,23 @@ import React from 'react'
 
 import styles from '@styles/ListContent.module.css'
 
-export default function ListContent() {
+export default function ListContent({ content }) {
+  console.log(content)
+
   return (
     <div className={styles.listContent}>
       <div className={styles.listHeader}>
-        <input type="text" />
+        <input type="text" placeholder={content.listName} />
       </div>
-      <div className={styles.listCards}>listCards</div>
-      <div className={styles.listCards}>listCards</div>
-      <div className={styles.listCards}>listCards</div>
+      {content.listCard.map((card) => {
+        return (
+          <div className={styles.listCards}>
+            <h3>{card.cardTitle}</h3>
+            <p>{card.cardDescription}</p>
+          </div>
+        )
+      })}
+
       <div className={styles.cardCompose}>+ Adicionar um cartão</div>
     </div>
   )
