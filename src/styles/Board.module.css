@@ -3,7 +3,7 @@
   width: 100%;
   display: flex;
   gap: var(--md-3);
-  border: 1px solid var(--complementary);
+  justify-content: flex-center;
   overflow-y: hidden;
   overflow-x: scroll;
   -ms-overflow-style: none;
@@ -12,4 +12,43 @@
 
 .board::-webkit-scrollbar {
   display: none;
+}
+
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-width: 272px;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  gap: var(--md-1);
+}
+
+.listWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.addListButton {
+  height: auto;
+  width: 100%;
+  max-width: 272px;
+  border: transparent;
+  outline: transparent;
+  padding: var(--md-1);
+  background-color: #35323248;
+  border-radius: var(--sm-2);
+  color: var(--text-light);
+  font-size: var(--md-1);
+  text-align: left;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.addListButton:hover {
+  background-color: #3532327c;
 }

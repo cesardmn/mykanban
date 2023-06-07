@@ -9,9 +9,9 @@
   --dark-complementary: #242424;
 
   /* fonts */
-  --tex-light: #fffffff5;
-  --tex-main: #ffffffab;
-  --tex-bolder: #ffffff73;
+  --text-light: #fffffff5;
+  --text-main: #ffffffab;
+  --text-bolder: #ffffff73;
 
   /* sizes */
   --sm-1: 0.375rem;
