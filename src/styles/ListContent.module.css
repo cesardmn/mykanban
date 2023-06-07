@@ -1,0 +1,47 @@
+.listContent {
+  height: auto;
+  width: 227px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm-3);
+  padding: var(--sm-2);
+  background-color: var(--text-bolder);
+  box-shadow: var(--shadow);
+  border-radius: var(--sm-2);
+}
+
+.listHeader {
+  height: auto;
+}
+
+.listHeader input {
+  background-color: transparent;
+  outline: transparent;
+  border: transparent;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.listHeader input:focus {
+  background-color: var(--text-light);
+  outline: var(--complementary);
+  border: 1px solid var(--complementary);
+}
+
+.listHeader input:focus:placeholder {
+  color: var(--text-light);
+}
+
+.listCards {
+  height: auto;
+  background-color: var(--text-main);
+  box-shadow: var(--shadow);
+  border-radius: var(--sm-1);
+  padding: var(--sm-3);
+}
+
+.cardCompose {
+  height: auto;
+  color: var(--complementary);
+  font-size: var(--sm-3);
+}
