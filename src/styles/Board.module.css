@@ -1,0 +1,15 @@
+.board {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  gap: var(--md-3);
+  border: 1px solid var(--complementary);
+  overflow-y: hidden;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.board::-webkit-scrollbar {
+  display: none;
+}
