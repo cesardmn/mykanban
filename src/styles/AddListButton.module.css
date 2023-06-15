@@ -1,0 +1,52 @@
+.buttonWrapper {
+  height: auto;
+  width: 257px;
+  padding: var(--md-1);
+  background-color: #35323248;
+  border-radius: var(--sm-2);
+  box-shadow: var(--shadow);
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.buttonWrapper:hover {
+  background-color: #3532327c;
+}
+
+/* .masterButton {
+  height: 100%;
+  width: 100%;
+} */
+
+.buttonWrapper button {
+  border: transparent;
+  outline: transparent;
+  background-color: transparent;
+  color: var(--text-light);
+  font-size: var(--md-1);
+  text-align: left;
+  cursor: pointer;
+}
+
+.buttonWrapper form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm-3);
+}
+
+.buttonWrapper fieldset {
+  border: transparent;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonWrapper .addButton {
+  background-color: var(--complementary);
+  padding: var(--sm-2);
+  border-radius: var(--sm-1);
+  transition: 0.3s;
+}
+
+.buttonWrapper .addButton:hover {
+  scale: 1.02;
+}
