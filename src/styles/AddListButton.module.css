@@ -1,52 +1,59 @@
 .buttonWrapper {
   height: auto;
-  width: 257px;
-  padding: var(--md-1);
+  padding: var(--sm-3);
   background-color: #35323248;
-  border-radius: var(--sm-2);
+  border-radius: var(--sm-1);
   box-shadow: var(--shadow);
   transition: 0.2s;
   cursor: pointer;
+  width: 100%;
 }
 
 .buttonWrapper:hover {
   background-color: #3532327c;
+  color: var(--text-light);
 }
 
-/* .masterButton {
-  height: 100%;
-  width: 100%;
-} */
-
 .buttonWrapper button {
+  width: 100%;
   border: transparent;
   outline: transparent;
   background-color: transparent;
-  color: var(--text-light);
-  font-size: var(--md-1);
-  text-align: left;
+  font-weight: bold;
+  text-transform: uppercase;
   cursor: pointer;
+  text-align: center;
 }
 
 .buttonWrapper form {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--sm-3);
 }
 
+.buttonWrapper form input {
+  width: 100%;
+  outline: transparent;
+}
+
 .buttonWrapper fieldset {
+  width: 100%;
   border: transparent;
   display: flex;
   justify-content: space-between;
 }
 
-.buttonWrapper .addButton {
-  background-color: var(--complementary);
-  padding: var(--sm-2);
+.buttonWrapper fieldset .aButton {
+  width: auto;
+  background-color: var(--text-bolder);
+  padding: var(--sm-1);
   border-radius: var(--sm-1);
-  transition: 0.3s;
+  box-shadow: var(--shadow);
 }
 
-.buttonWrapper .addButton:hover {
-  scale: 1.02;
+.buttonWrapper fieldset .aButton:hover {
+  scale: 1.03;
+  color: var(--text-light);
+  background-color: var(--dark-complementary);
 }

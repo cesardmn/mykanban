@@ -1,20 +1,35 @@
-import Board from '@components/Board'
-import ActionButton from '@src/components/ActionButton'
-import AddListButton from '@src/components/AddListButton'
+import { useEffect } from 'react'
+
+import Button from '@src/components/Button'
 import Logo from '@src/components/Logo'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+
+import { v4 as uuidv4 } from 'uuid'
+import AddListButton from '@src/components/ActionButton'
+
+import { fBoard } from '../helpers'
+
+// providers
+import { useBoards } from '@providers/BoardsProvider'
 
 export default function Home() {
-  const [boards, setBoards] = useState(null)
-  const [menuIsOpen, setMenuIsOpen] = useState(false)
+  const localBoards = fBoard()
+  const { boards, setBoards } = useBoards()
 
-  const handleMenu = () => {
-    setMenuIsOpen(!menuIsOpen)
+  const handleNewBoard = (name) => {
+    const board = {
+      id: uuidv4(),
+      name,
+      lists: [],
+      createdAt: Date.now(),
+    }
+
+    localBoards.addBoard(board)
+    setBoards(localBoards.all())
   }
 
   useEffect(() => {
-    setBoards(JSON.parse(localStorage.getItem('MyKanban')) || null)
+    setBoards(localBoards.all())
   }, [])
 
   return (
@@ -33,21 +48,21 @@ export default function Home() {
 
           <h2>Boards</h2>
           <ul className="boardLIst noScrollBar">
-            <li>Board 1</li>
-            <li>Board 2</li>
-            <li>Board 3</li>
-            <li>Board 4</li>
+            {boards &&
+              boards.map((board) => {
+                return <li key={board.id}>{board.name} </li>
+              })}
           </ul>
 
           <div className="boardActions">
-            <ActionButton>new</ActionButton>
-            <ActionButton>import</ActionButton>
-            <ActionButton>export</ActionButton>
+            <AddListButton action={handleNewBoard}>New</AddListButton>
+            <Button>import</Button>
+            <Button>export</Button>
           </div>
         </div>
 
         <div className="boardContent">
-          {boards ? <Board /> : <div>preview</div>}
+          <div>preview</div>
         </div>
       </main>
     </>

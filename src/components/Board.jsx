@@ -2,7 +2,7 @@
 import styles from '@styles/Board.module.css'
 
 // components
-import AddListButton from './AddListButton'
+import AddListButton from './ActionButton'
 
 export default function Board(board) {
   return (
