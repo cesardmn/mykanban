@@ -3,9 +3,6 @@ import React from 'react'
 import styles from '@styles/ListContent.module.css'
 
 export default function ListContent({ content }) {
-
-  
-
   return (
     <div className={styles.listContent}>
       <div className={styles.listHeader}>
@@ -13,7 +10,7 @@ export default function ListContent({ content }) {
       </div>
       {content.listCard.map((card) => {
         return (
-          <div className={styles.listCards} key={card.cardTitle   } >
+          <div className={styles.listCards} key={card.cardTitle}>
             <h3>{card.cardTitle}</h3>
             <p>{card.cardDescription}</p>
           </div>

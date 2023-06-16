@@ -28,8 +28,7 @@ const db = [
   {
     listName: 'Realizado',
     cardTitle: 'projeto da semana ',
-    cardDescription:
-      'Devflix, projeto de página para salvar links do YouTube.',
+    cardDescription: 'Devflix, projeto de página para salvar links do YouTube.',
   },
 ]
 
