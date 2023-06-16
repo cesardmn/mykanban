@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import Button from '@src/components/Button'
 import Logo from '@src/components/Logo'
@@ -11,10 +11,13 @@ import { fBoard } from '../helpers'
 
 // providers
 import { useBoards } from '@providers/BoardsProvider'
+import Board from '@src/components/Board'
 
 export default function Home() {
   const localBoards = fBoard()
   const { boards, setBoards } = useBoards()
+
+  const [boardDisplay, setBoardDisplay] = useState()
 
   const handleNewBoard = (name) => {
     const board = {
@@ -26,10 +29,13 @@ export default function Home() {
 
     localBoards.addBoard(board)
     setBoards(localBoards.all())
+    setBoardDisplay(board)
   }
 
   useEffect(() => {
-    setBoards(localBoards.all())
+    const localAll = localBoards.all()
+    localAll && setBoardDisplay(localAll[0])
+    setBoards(localAll)
   }, [])
 
   return (
@@ -57,12 +63,22 @@ export default function Home() {
           <div className="boardActions">
             <AddListButton action={handleNewBoard}>New</AddListButton>
             <Button>import</Button>
-            <Button>export</Button>
+            {boards && <Button>export</Button>}
           </div>
         </div>
 
-        <div className="boardContent">
-          <div>preview</div>
+        <div className="content">
+          {boardDisplay ? (
+            <div className="boardDisplay">
+              <header>
+                <span>{boardDisplay.name}</span>
+                <span>del board</span>
+              </header>
+              <Board  board={boardDisplay} />
+            </div>
+          ) : (
+            <span>preview</span>
+          )}
         </div>
       </main>
     </>

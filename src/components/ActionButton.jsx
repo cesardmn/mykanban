@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 import styles from '@styles/AddListButton.module.css'
 
 export default function AddListButton({ children, action }) {
-  const [form, setForm] = useState(true)
+  const [form, setForm] = useState(false)
   const inputRef = useRef(null)
   const addButtonRef = useRef(null)
 

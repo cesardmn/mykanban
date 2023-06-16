@@ -124,7 +124,24 @@ main {
   gap: var(--sm-2);
 }
 
-.boardContent {
+.content {
   height: 100%;
   width: 85%;
+}
+
+.boardDisplay {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.boardDisplay header {
+  display: flex;
+  width: 100%;
+  height: auto;
+  padding: var(--sm-2);
+  /* border-bottom: 1px solid var(--text-bolder); */
+  justify-content: space-between;
+  margin-bottom: var(--sm-2);
 }
