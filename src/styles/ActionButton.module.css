@@ -1,9 +1,13 @@
 .actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  width: 100%;
   outline: transparent;
   border: transparent;
   background-color: var(--box);
   box-shadow: var(--shadow);
-  margin: var(--sm-2);
   padding: var(--sm-3);
   border-radius: var(--sm-1);
   text-transform: uppercase;

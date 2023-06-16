@@ -1,9 +1,17 @@
 import Board from '@components/Board'
+import ActionButton from '@src/components/ActionButton'
+import AddListButton from '@src/components/AddListButton'
+import Logo from '@src/components/Logo'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
   const [boards, setBoards] = useState(null)
+  const [menuIsOpen, setMenuIsOpen] = useState(false)
+
+  const handleMenu = () => {
+    setMenuIsOpen(!menuIsOpen)
+  }
 
   useEffect(() => {
     setBoards(JSON.parse(localStorage.getItem('MyKanban')) || null)
@@ -18,29 +26,28 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="boardList">
-          <h1>My Kanabn</h1>
-          <button>New Board</button>
-          <h2>Boards</h2>
+        <div className="menu">
+          <div className="logo">
+            <Logo />
+          </div>
 
-          {boards ? (
-            <div>Export Boards</div>
-          ) : (
-            <form action="">
-              <label htmlFor="boards">
-                <button>Impor tBoards</button>
-              </label>
-              <input type="file" name="boards" id="boards" hidden />
-            </form>
-          )}
+          <h2>Boards</h2>
+          <ul className="boardLIst noScrollBar">
+            <li>Board 1</li>
+            <li>Board 2</li>
+            <li>Board 3</li>
+            <li>Board 4</li>
+          </ul>
+
+          <div className="boardActions">
+            <ActionButton>new</ActionButton>
+            <ActionButton>import</ActionButton>
+            <ActionButton>export</ActionButton>
+          </div>
         </div>
 
         <div className="boardContent">
-          {
-            boards ?
-            <Board/> :
-            <div>preview</div>
-          }
+          {boards ? <Board /> : <div>preview</div>}
         </div>
       </main>
     </>

@@ -26,6 +26,9 @@
   --lg-2: 3.5rem;
   --lg-3: 4.5rem;
 
+  --box: #201f1f43;
+  --box-hover: #201f1f86;
+
   --shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
@@ -60,26 +63,65 @@ body {
   align-items: center;
 }
 
+.noScrollBar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.noScrollBar::-webkit-scrollbar {
+  display: none;
+}
+
 main {
   position: relative;
   display: flex;
   width: 100%;
   height: 100%;
-  background-color: #faaca8;
   padding: var(--md-1) 0;
   background-color: #faaca8;
   background-image: linear-gradient(19deg, #faaca8 0%, #ddd6f3 100%);
 }
 
-h1 {
-  color: var(--text-w-light);
-}
-
-.boardList {
+.menu {
   height: 100%;
   width: 15%;
-  border-right: 1px solid var(--text-w-bolder);
   min-width: 180px;
+  border-right: 1px solid var(--text-bolder);
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  grid-gap: 1rem;
+}
+
+.menu h2 {
+  text-align: center;
+  color: var(--complementary);
+}
+
+.boardLIst {
+  /* background-color: #fafafa; */
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--md-3);
+  overflow: scroll;
+  padding: var(--sm-2);
+}
+
+.boardLIst li {
+  cursor: pointer;
+  text-decoration: underline;
+  transition: 0.2s;
+}
+.boardLIst li:hover {
+  color: var(--text-bolder);
+}
+
+.boardActions {
+  display: flex;
+  flex-direction: column;
+  padding: var(--sm-2);
+  gap: var(--sm-2);
 }
 
 .boardContent {
