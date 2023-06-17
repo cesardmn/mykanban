@@ -74,7 +74,7 @@ export default function Home() {
                 <span>{boardDisplay.name}</span>
                 <span>del board</span>
               </header>
-              <Board  board={boardDisplay} />
+              <Board board={boardDisplay} />
             </div>
           ) : (
             <span>preview</span>

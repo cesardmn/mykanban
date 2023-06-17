@@ -5,11 +5,16 @@ import styles from '@styles/Board.module.css'
 import AddListButton from './ActionButton'
 
 import { v4 as uuidv4 } from 'uuid'
+import { useBoards } from '@providers/BoardsProvider'
 
 import { fBoard } from '../helpers'
+import ListContent from './ListContent'
 
 export default function Board({ board }) {
   const localBoards = fBoard()
+  const { boards, setBoards } = useBoards()
+
+  console.log(board.lists.length)
 
   const handleNewList = (name) => {
     const list = {
@@ -19,11 +24,16 @@ export default function Board({ board }) {
       createdAt: Date.now(),
     }
 
-    const localBoard = localBoards.addList(board, list)
+    localBoards.addList(board, list)
+    setBoards(localBoards.all())
   }
 
   return (
     <div className={styles.board}>
+      {board.lists.length > 0 &&
+        board.lists.map((list) => {
+          return <ListContent list={list} key={list.id} />
+        })}
       <div className={styles.listWrapper}>
         <AddListButton action={handleNewList}>+ add list</AddListButton>
       </div>
