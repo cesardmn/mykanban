@@ -14,6 +14,12 @@ export const fBoard = () => {
     }
   }
 
+  const deleteBoard = (boardUp) => {
+    const boards = all()
+    const without = boards.filter((board) => board.id !== boardUp.id)
+    localStorage.setItem('mk_boards', JSON.stringify(without))
+  }
+
   const getBoardById = (id) => {
     const boards = all()
 
@@ -32,5 +38,5 @@ export const fBoard = () => {
     localStorage.setItem('mk_boards', JSON.stringify([boardUp, ...without]))
   }
 
-  return { all, addBoard, getBoardById, addList }
+  return { all, addBoard, deleteBoard, getBoardById, addList }
 }

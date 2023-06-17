@@ -36,6 +36,12 @@ export default function Home() {
     setBoardDisplay(board)
   }
 
+  const handleDeleteBoard = (board) => {
+    localBoards.deleteBoard(board)
+    setBoards(localBoards.all())
+    setBoardDisplay(null)
+  }
+
   useEffect(() => {
     const localAll = localBoards.all()
     localAll && setBoardDisplay(localAll[0])
@@ -60,10 +66,16 @@ export default function Home() {
           <ul className="boardLIst noScrollBar">
             {boards &&
               boards.map((board) => {
-                return <li 
-                key={board.id}
-                onClick={() => {handleBoardView(board)}}
-                >{board.name} </li>
+                return (
+                  <li
+                    key={board.id}
+                    onClick={() => {
+                      handleBoardView(board)
+                    }}
+                  >
+                    {board.name}{' '}
+                  </li>
+                )
               })}
           </ul>
 
@@ -79,7 +91,13 @@ export default function Home() {
             <div className="boardDisplay">
               <header>
                 <span>{boardDisplay.name}</span>
-                <span>del board</span>
+                <span
+                  onClick={() => {
+                    handleDeleteBoard(boardDisplay)
+                  }}
+                >
+                  del board
+                </span>
               </header>
               <Board board={boardDisplay} />
             </div>
