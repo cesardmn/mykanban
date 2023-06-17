@@ -20,16 +20,6 @@ export const fBoard = () => {
     localStorage.setItem('mk_boards', JSON.stringify(without))
   }
 
-  const getBoardById = (id) => {
-    const boards = all()
-
-    if (boards) {
-      return boards.filter((board) => board.id === id)[0]
-    } else {
-      return null
-    }
-  }
-
   const addList = (boardUp, list) => {
     const boards = all()
     const without = boards.filter((board) => board.id !== boardUp.id)
@@ -38,5 +28,16 @@ export const fBoard = () => {
     localStorage.setItem('mk_boards', JSON.stringify([boardUp, ...without]))
   }
 
-  return { all, addBoard, deleteBoard, getBoardById, addList }
+  const addCard = (card, listUp) => {
+    listUp.cards = [card, ...listUp.cards]
+    let boards = all()
+    const boardsWithout = boards.filter((board) => board.id !== listUp.board)
+    const boardUp = boards.filter((board) => board.id === listUp.board)[0]
+    const listsWithout = boardUp.lists.filter((list) => list.id !== listUp.id)
+    boardUp.lists = [listUp, ...listsWithout]
+    boards = [boardUp, ...boardsWithout]
+    localStorage.setItem('mk_boards', JSON.stringify(boards))
+  }
+
+  return { all, addBoard, deleteBoard, addList, addCard }
 }

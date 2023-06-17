@@ -4,7 +4,7 @@
   id: uuid
   name: string
   lists: array
-createdAt: Date.now()
+  createdAt: Date.now()
 
 - list:
   id: uuid
