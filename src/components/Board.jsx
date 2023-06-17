@@ -12,13 +12,14 @@ import ListContent from './ListContent'
 
 export default function Board({ board }) {
   const localBoards = fBoard()
-  const { boards, setBoards } = useBoards()
+  const { setBoards } = useBoards()
 
   const handleNewList = (name) => {
     const list = {
       id: uuidv4(),
       name,
       cards: [],
+      board: board.id,
       createdAt: Date.now(),
     }
 
