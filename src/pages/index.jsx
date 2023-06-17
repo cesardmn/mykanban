@@ -32,6 +32,10 @@ export default function Home() {
     setBoardDisplay(board)
   }
 
+  const handleBoardView = (board) => {
+    setBoardDisplay(board)
+  }
+
   useEffect(() => {
     const localAll = localBoards.all()
     localAll && setBoardDisplay(localAll[0])
@@ -56,7 +60,10 @@ export default function Home() {
           <ul className="boardLIst noScrollBar">
             {boards &&
               boards.map((board) => {
-                return <li key={board.id}>{board.name} </li>
+                return <li 
+                key={board.id}
+                onClick={() => {handleBoardView(board)}}
+                >{board.name} </li>
               })}
           </ul>
 

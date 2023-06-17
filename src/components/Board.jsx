@@ -14,8 +14,6 @@ export default function Board({ board }) {
   const localBoards = fBoard()
   const { boards, setBoards } = useBoards()
 
-  console.log(board.lists.length)
-
   const handleNewList = (name) => {
     const list = {
       id: uuidv4(),
