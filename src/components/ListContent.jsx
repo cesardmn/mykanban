@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 import styles from '@styles/ListContent.module.css'
 import AddListButton from './ActionButton'
@@ -12,6 +12,10 @@ export default function ListContent({ list }) {
   const { setBoards } = useBoards()
 
   const [listView, setListView] = useState()
+  const [editedListName, setEditedListName] = useState(list.name)
+  const [isEditingListName, setIsEditingListName] = useState(false)
+
+  const inputRef = useRef(null)
 
   useEffect(() => {
     setListView(list)
@@ -44,12 +48,46 @@ export default function ListContent({ list }) {
     setListView(newList)
   }
 
+  const handleSaveListName = () => {
+    localBoards.listNameUpdate(listView.id, editedListName)
+    setListView({ ...listView, name: editedListName })
+    setIsEditingListName(false)
+    setBoards(localBoards.all())
+  }
+
+  const handleInputFocus = () => {
+    setIsEditingListName(true)
+    setEditedListName(listView.name)
+  }
+
+  useEffect(() => {
+    if (isEditingListName && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [isEditingListName])
+
   return (
     <>
       {listView && (
         <div className={styles.listContent}>
           <div className={styles.listHeader}>
-            <input type="text" placeholder={listView.name} />
+            {isEditingListName ? (
+              <input
+                type="text"
+                placeholder={listView.name}
+                value={editedListName}
+                onChange={(e) => setEditedListName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSaveListName()
+                  }
+                }}
+                onBlur={handleSaveListName}
+                ref={inputRef}
+              />
+            ) : (
+              <span onClick={handleInputFocus}>{listView.name}</span>
+            )}
             <button onClick={handleDeleteList}>x</button>
           </div>
           {listView.cards.map((card) => {
@@ -57,13 +95,7 @@ export default function ListContent({ list }) {
               <div className={styles.listCards} key={card.id}>
                 <div>
                   <h3>{card.name}</h3>
-                  <button
-                    onClick={() => {
-                      handleDeleteCard(card.id)
-                    }}
-                  >
-                    x
-                  </button>
+                  <button onClick={() => handleDeleteCard(card.id)}>x</button>
                 </div>
                 <p>{card.content}</p>
               </div>
