@@ -1,20 +1,11 @@
-// react
 import { useEffect, useState } from 'react'
-
-// next
 import Head from 'next/head'
-
-//components
 import Board from '@src/components/Board'
 import Button from '@src/components/Button'
 import Logo from '@src/components/Logo'
 import AddListButton from '@src/components/ActionButton'
-
-// libs
 import { v4 as uuidv4 } from 'uuid'
 import { fBoard } from '../helpers'
-
-// providers
 import { useBoards } from '@providers/BoardsProvider'
 import { useBoardView } from '@providers/BoardViewProvider'
 
@@ -22,6 +13,9 @@ export default function Home() {
   const localBoards = fBoard()
   const { boards, setBoards } = useBoards()
   const { boardView, setBoardView } = useBoardView()
+
+  const [onEditBoardName, setOnEditBoardName] = useState(false)
+  const [editedBoardName, setEditedBoardName] = useState('')
 
   const handleNewBoard = (name) => {
     const board = {
@@ -45,6 +39,13 @@ export default function Home() {
     setBoardView(null)
   }
 
+  const handleSaveBoardName = () => {
+    localBoards.boardNameUpdate(boardView.id, editedBoardName)
+    setOnEditBoardName(false)
+    setBoardView({ ...boardView, name: editedBoardName })
+    setBoards(localBoards.all())
+  }
+
   useEffect(() => {
     setBoards(localBoards.all())
   }, [])
@@ -64,7 +65,7 @@ export default function Home() {
           </div>
 
           <h2>Boards</h2>
-          <ul className="boardLIst noScrollBar">
+          <ul className="boardList noScrollBar">
             {boards &&
               boards.map((board) => {
                 return (
@@ -74,7 +75,7 @@ export default function Home() {
                       handleBoardView(board)
                     }}
                   >
-                    {board.name}{' '}
+                    {board.name}
                   </li>
                 )
               })}
@@ -91,7 +92,29 @@ export default function Home() {
           {boardView ? (
             <div className="boardDisplay">
               <header>
-                <span>{boardView.name}</span>
+                {onEditBoardName ? (
+                  <input
+                    type="text"
+                    placeholder={boardView.name}
+                    value={editedBoardName}
+                    onChange={(e) => setEditedBoardName(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleSaveBoardName()
+                      }
+                    }}
+                    onBlur={handleSaveBoardName}
+                  />
+                ) : (
+                  <span
+                    onClick={() => {
+                      setOnEditBoardName(true)
+                      setEditedBoardName(boardView.name)
+                    }}
+                  >
+                    {boardView.name}
+                  </span>
+                )}
                 <span
                   onClick={() => {
                     handleDeleteBoard(boardView)
