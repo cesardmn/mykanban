@@ -104,6 +104,7 @@ export default function Home() {
                       }
                     }}
                     onBlur={handleSaveBoardName}
+                    autoFocus // Adiciona o atributo autoFocus para fornecer o foco inicial
                   />
                 ) : (
                   <span
