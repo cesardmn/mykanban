@@ -1,0 +1,18 @@
+.button {
+  border: transparent;
+  outline: transparent;
+  border: transparent;
+  height: auto;
+  width: auto;
+  padding: var(--sm-1);
+  box-shadow: (--shadow);
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: 0.3s
+}
+
+.button:hover {
+  scale: 1.2;
+  color: brown;
+}

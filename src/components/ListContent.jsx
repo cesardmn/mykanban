@@ -7,6 +7,9 @@ import { useBoards } from '@providers/BoardsProvider'
 import { fBoard } from '../helpers'
 import { v4 as uuidv4 } from 'uuid'
 
+import { TbTrashX } from 'react-icons/tb'
+import TrashButton from './TrashButton'
+
 export default function ListContent({ list }) {
   const localBoards = fBoard()
   const { setBoards } = useBoards()
@@ -86,23 +89,33 @@ export default function ListContent({ list }) {
                 ref={inputRef}
               />
             ) : (
-              <span onClick={handleInputFocus}>{listView.name}</span>
+              <h3 onClick={handleInputFocus}>{listView.name}</h3>
             )}
-            <button onClick={handleDeleteList}>x</button>
+            <div onClick={handleDeleteList}>
+              <TrashButton />
+            </div>
           </div>
-          {listView.cards.map((card) => {
-            return (
-              <div className={styles.listCards} key={card.id}>
-                <div>
-                  <h3>{card.name}</h3>
-                  <button onClick={() => handleDeleteCard(card.id)}>x</button>
-                </div>
-                <p>{card.content}</p>
-              </div>
-            )
-          })}
 
-          {/* <div className={styles.cardCompose}>+ Adicionar um cartão</div> */}
+          <div className={`${styles.cardList} ${styles.noScrollBar}`}>
+            {listView.cards.map((card) => {
+              return (
+
+
+                <div className={styles.card} key={card.id}>
+                  <div className={styles.cardHeader} >
+                    <h3>{card.name}</h3>
+                    <div onClick={() => handleDeleteCard(card.id)}>
+                      <TrashButton />
+                    </div>
+                  </div>
+                  <p>{card.content}</p>
+                </div>
+
+
+
+              )
+            })}
+          </div>
           <AddListButton action={handleNewCard}>+ add card</AddListButton>
         </div>
       )}
