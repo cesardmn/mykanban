@@ -1,0 +1,36 @@
+.full {
+  height: auto;
+  width: 500px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: baseline;
+  background-color: rgba(0, 0, 0, 0.226);
+  margin: var(--lg-1);
+  padding: var(--sm-2);
+  border-radius: var(--sm-2);
+}
+
+.full h4 {
+  width: 100%;
+  background-color: var(--text-light);
+  padding: var(--sm-3);
+  text-align: center;
+}
+
+.editor {
+  background-color: var(--text-light);
+
+  height: 400px;
+  min-height: 400px;
+  width: 100%;
+  border: transparent;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.editor::-webkit-scrollbar {
+  display: none;
+}

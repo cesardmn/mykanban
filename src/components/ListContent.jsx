@@ -7,8 +7,8 @@ import { useBoards } from '@providers/BoardsProvider'
 import { fBoard } from '../helpers'
 import { v4 as uuidv4 } from 'uuid'
 
-import { TbTrashX } from 'react-icons/tb'
 import TrashButton from './TrashButton'
+import Editor from './Editor'
 
 export default function ListContent({ list }) {
   const localBoards = fBoard()
@@ -17,6 +17,7 @@ export default function ListContent({ list }) {
   const [listView, setListView] = useState()
   const [editedListName, setEditedListName] = useState(list.name)
   const [isEditingListName, setIsEditingListName] = useState(false)
+  const [onEditor, setOnEditor] = useState(false)
 
   const inputRef = useRef(null)
 
@@ -63,6 +64,10 @@ export default function ListContent({ list }) {
     setEditedListName(listView.name)
   }
 
+  const handleCloseEditor = () => {
+    setOnEditor(false)
+  }
+
   useEffect(() => {
     if (isEditingListName && inputRef.current) {
       inputRef.current.focus()
@@ -99,10 +104,12 @@ export default function ListContent({ list }) {
           <div className={`${styles.cardList} ${styles.noScrollBar}`}>
             {listView.cards.map((card) => {
               return (
-
-
-                <div className={styles.card} key={card.id}>
-                  <div className={styles.cardHeader} >
+                <div
+                  className={styles.card}
+                  key={card.id}
+                  onClick={() => setOnEditor(true)}
+                >
+                  <div className={styles.cardHeader}>
                     <h3>{card.name}</h3>
                     <div onClick={() => handleDeleteCard(card.id)}>
                       <TrashButton />
@@ -110,15 +117,14 @@ export default function ListContent({ list }) {
                   </div>
                   <p>{card.content}</p>
                 </div>
-
-
-
               )
             })}
           </div>
           <AddListButton action={handleNewCard}>+ add card</AddListButton>
         </div>
       )}
+
+      {onEditor && <Editor closeEditor={handleCloseEditor} />}
     </>
   )
 }
