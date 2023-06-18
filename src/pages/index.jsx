@@ -1,23 +1,27 @@
+// react
 import { useEffect, useState } from 'react'
 
-import Button from '@src/components/Button'
-import Logo from '@src/components/Logo'
+// next
 import Head from 'next/head'
 
-import { v4 as uuidv4 } from 'uuid'
+//components
+import Board from '@src/components/Board'
+import Button from '@src/components/Button'
+import Logo from '@src/components/Logo'
 import AddListButton from '@src/components/ActionButton'
 
+// libs
+import { v4 as uuidv4 } from 'uuid'
 import { fBoard } from '../helpers'
 
 // providers
 import { useBoards } from '@providers/BoardsProvider'
-import Board from '@src/components/Board'
+import { useBoardView } from '@providers/BoardViewProvider'
 
 export default function Home() {
   const localBoards = fBoard()
   const { boards, setBoards } = useBoards()
-
-  const [boardDisplay, setBoardDisplay] = useState()
+  const { boardView, setBoardView } = useBoardView()
 
   const handleNewBoard = (name) => {
     const board = {
@@ -29,23 +33,20 @@ export default function Home() {
 
     localBoards.addBoard(board)
     setBoards(localBoards.all())
-    setBoardDisplay(board)
   }
 
   const handleBoardView = (board) => {
-    setBoardDisplay(board)
+    setBoardView(board)
   }
 
   const handleDeleteBoard = (board) => {
-    localBoards.deleteBoard(board)
+    localBoards.deleteBoard(board.id)
     setBoards(localBoards.all())
-    setBoardDisplay(null)
+    setBoardView(null)
   }
 
   useEffect(() => {
-    const localAll = localBoards.all()
-    localAll && setBoardDisplay(localAll[0])
-    setBoards(localAll)
+    setBoards(localBoards.all())
   }, [])
 
   return (
@@ -87,19 +88,19 @@ export default function Home() {
         </div>
 
         <div className="content">
-          {boardDisplay ? (
+          {boardView ? (
             <div className="boardDisplay">
               <header>
-                <span>{boardDisplay.name}</span>
+                <span>{boardView.name}</span>
                 <span
                   onClick={() => {
-                    handleDeleteBoard(boardDisplay)
+                    handleDeleteBoard(boardView)
                   }}
                 >
                   del board
                 </span>
               </header>
-              <Board board={boardDisplay} />
+              <Board />
             </div>
           ) : (
             <span>preview</span>
