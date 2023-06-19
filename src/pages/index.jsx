@@ -50,6 +50,31 @@ export default function Home() {
     setBoards(localBoards.all())
   }, [])
 
+  const handleExportBoards = () => {
+    const boards = localBoards.all()
+    const json = JSON.stringify(boards, null, 2)
+    const blob = new Blob([json], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+
+    const currentDate = new Date()
+    const formattedDate = currentDate
+      .toLocaleString('pt-BR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replace(/\//g, '')
+
+    const fileName = `${formattedDate}_mykanban_boards.json`
+
+    const link = document.createElement('a')
+    link.href = url
+    link.download = fileName
+    link.click()
+
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <>
       <Head>
@@ -84,7 +109,11 @@ export default function Home() {
           <div className="boardActions">
             <AddListButton action={handleNewBoard}>New</AddListButton>
             <Button>import</Button>
-            {boards && <Button>export</Button>}
+            {boards && (
+              <div onClick={handleExportBoards}>
+                <Button>export</Button>
+              </div>
+            )}
           </div>
         </div>
 
