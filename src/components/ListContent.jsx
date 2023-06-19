@@ -82,6 +82,10 @@ export default function ListContent({ list }) {
     setOnEditor(true)
   }
 
+  const handleListViewUpdate = (listView) => {
+    setListView(listView)
+  }
+
   useEffect(() => {
     if (isEditingListName && inputRef.current) {
       inputRef.current.focus()
@@ -141,6 +145,7 @@ export default function ListContent({ list }) {
           card={card}
           closeEditor={handleCloseEditor}
           listView={listView}
+          listViewUpdate={handleListViewUpdate}
         />
       )}
     </>
