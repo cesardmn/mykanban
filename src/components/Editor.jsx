@@ -1,56 +1,71 @@
-import { useQuill } from 'react-quilljs'
+import { useEffect, useRef } from 'react'
 import 'quill/dist/quill.snow.css'
-import { useEffect, useState, useRef } from 'react'
+import { useQuill } from 'react-quilljs'
 
 import styles from '@styles/Editor.module.css'
+import { fBoard } from '@src/helpers'
 
-export default function Editor({ closeEditor }) {
+export default function Editor({ closeEditor, card, listView }) {
   const { quill, quillRef } = useQuill()
-  const [formattedText, setFormattedText] = useState('') // Variável externa para armazenar o texto formatado
   const editorElementRef = useRef(null)
+
+  const localBoards = fBoard()
 
   useEffect(() => {
     if (quill) {
       quill.on('text-change', (delta, oldDelta, source) => {
         const text = quill.root.innerHTML
-        setFormattedText(text) // Atualiza a variável externa com o texto formatado
+        const updatedContent = {
+          pure: editorElementRef.current.textContent,
+          formatted: text,
+        }
+        localBoards.cardContentUpdate(card.id, updatedContent)
       })
 
-      if (!formattedText && quill.root.innerHTML === '') {
-        quill.clipboard.dangerouslyPasteHTML(formattedText)
-      }
-
-      quill.focus() // Dá foco ao editor
+      quill.focus()
 
       editorElementRef.current = quillRef.current.firstChild
-
-      if (editorElementRef.current) {
-        editorElementRef.current.addEventListener('blur', handleEditorBlur) // Adiciona o event listener para o evento blur
-      }
     }
-
-    return () => {
-      if (editorElementRef.current) {
-        editorElementRef.current.removeEventListener('blur', handleEditorBlur) // Remove o event listener ao desmontar o componente
-      }
-    }
-  }, [quill, formattedText])
+  }, [quill, card, localBoards])
 
   useEffect(() => {
-    if (quill && formattedText) {
-      quill.clipboard.dangerouslyPasteHTML(formattedText)
+    const handleEscapeKeyPress = (event) => {
+      if (event.key === 'Escape') {
+        closeEditor()
+      }
     }
-  }, [quill, formattedText])
 
-  const handleEditorBlur = () => {
-    closeEditor()
-  }
+    const handleBackdropClick = (event) => {
+      if (event.target.classList.contains(styles.modalBackdrop)) {
+        closeEditor()
+      }
+    }
+
+    document.addEventListener('keydown', handleEscapeKeyPress)
+    document.addEventListener('click', handleBackdropClick)
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKeyPress)
+      document.removeEventListener('click', handleBackdropClick)
+    }
+  }, [closeEditor])
 
   return (
-    <div className={styles.full}>
-      <h4  >Card Name</h4>
-      <div className={styles.editor}>
-        <div ref={quillRef} />
+    <div className={styles.modalBackdrop}>
+      <div className={styles.modal}>
+        <div className={styles.header}>
+          <h4>{card.name}</h4>
+        </div>
+        <div className={styles.editor}>
+          <div
+            ref={quillRef}
+            dangerouslySetInnerHTML={{
+              __html:
+                listView.cards.find((c) => c.id === card.id)?.content
+                  .formatted || '',
+            }}
+          />
+        </div>
       </div>
     </div>
   )

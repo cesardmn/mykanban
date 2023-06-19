@@ -39,7 +39,7 @@ export default function Board() {
     <div className={styles.board}>
       {boardView.lists.length > 0 &&
         boardView.lists.map((list) => {
-             return <ListContent list={list} key={list.id} />
+          return <ListContent list={list} key={list.id} />
         })}
       <div className={styles.listWrapper}>
         <AddListButton action={handleNewList}>+ add list</AddListButton>

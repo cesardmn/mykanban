@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import styles from '@styles/ListContent.module.css'
 import AddListButton from './ActionButton'
 import { useBoards } from '@providers/BoardsProvider'
+import { useCard } from '@providers/CardProvider'
 
 import { fBoard } from '../helpers'
 import { v4 as uuidv4 } from 'uuid'
@@ -13,6 +14,7 @@ import Editor from './Editor'
 export default function ListContent({ list }) {
   const localBoards = fBoard()
   const { setBoards } = useBoards()
+  const { card, setCard } = useCard()
 
   const [listView, setListView] = useState()
   const [editedListName, setEditedListName] = useState(list.name)
@@ -23,18 +25,21 @@ export default function ListContent({ list }) {
 
   useEffect(() => {
     setListView(list)
-  }, [])
+  }, [list])
 
   const handleNewCard = (name) => {
-    const card = {
+    const newCard = {
       id: uuidv4(),
       name,
-      content: '',
+      content: {
+        pure: '',
+        formatted: '',
+      },
       list: listView.id,
       createdAt: Date.now(),
     }
 
-    localBoards.addCard(listView.id, card)
+    localBoards.addCard(listView.id, newCard)
     setBoards(localBoards.all())
     const newList = localBoards.getListById(listView.id)
     setListView(newList)
@@ -64,8 +69,17 @@ export default function ListContent({ list }) {
     setEditedListName(listView.name)
   }
 
-  const handleCloseEditor = () => {
+  const handleCloseEditor = (updatedContent) => {
     setOnEditor(false)
+    setCard(null)
+    if (updatedContent) {
+      localBoards.cardContentUpdate(card.id, updatedContent)
+    }
+  }
+
+  const handleEditor = (card) => {
+    setCard(card)
+    setOnEditor(true)
   }
 
   useEffect(() => {
@@ -102,29 +116,33 @@ export default function ListContent({ list }) {
           </div>
 
           <div className={`${styles.cardList} ${styles.noScrollBar}`}>
-            {listView.cards.map((card) => {
-              return (
-                <div
-                  className={styles.card}
-                  key={card.id}
-                  onClick={() => setOnEditor(true)}
-                >
-                  <div className={styles.cardHeader}>
-                    <h3>{card.name}</h3>
-                    <div onClick={() => handleDeleteCard(card.id)}>
-                      <TrashButton />
-                    </div>
+            {listView.cards.map((card) => (
+              <div className={styles.card} key={card.id}>
+                <div className={styles.cardHeader}>
+                  <h3>{card.name}</h3>
+                  <div onClick={() => handleDeleteCard(card.id)}>
+                    <TrashButton />
                   </div>
-                  <p>{card.content}</p>
                 </div>
-              )
-            })}
+                <label htmlFor="content" onClick={() => handleEditor(card)}>
+                  {card.content.pure === ''
+                    ? '+ content'
+                    : `${card.content.pure.substring(0, 15)}...`}
+                </label>
+              </div>
+            ))}
           </div>
           <AddListButton action={handleNewCard}>+ add card</AddListButton>
         </div>
       )}
 
-      {onEditor && <Editor closeEditor={handleCloseEditor} />}
+      {onEditor && (
+        <Editor
+          card={card}
+          closeEditor={handleCloseEditor}
+          listView={listView}
+        />
+      )}
     </>
   )
 }
