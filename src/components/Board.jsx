@@ -11,14 +11,12 @@ import { fBoard } from '../helpers'
 
 //providers
 import { useBoards } from '@providers/BoardsProvider'
-import { useBoardView } from '@providers/BoardViewProvider'
-import { useEffect } from 'react'
 
-export default function Board() {
+export default function Board({ boardViewSelected }) {
   const localBoards = fBoard()
   const { setBoards } = useBoards()
 
-  const { boardView, setBoardView } = useBoardView()
+  const boardView = localBoards.getBoardById(boardViewSelected.id)
 
   const handleNewList = (name) => {
     const list = {
@@ -31,8 +29,6 @@ export default function Board() {
 
     localBoards.addList(boardView.id, list)
     setBoards(localBoards.all())
-    const newBoard = localBoards.getBoardById(boardView.id)
-    setBoardView(newBoard)
   }
 
   return (

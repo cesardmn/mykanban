@@ -153,7 +153,7 @@ export default function Home() {
                   del board
                 </span>
               </header>
-              <Board />
+              <Board boardViewSelected={boardView} />
             </div>
           ) : (
             <span>preview</span>
