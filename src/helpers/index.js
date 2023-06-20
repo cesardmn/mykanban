@@ -155,6 +155,34 @@ export const fBoard = () => {
     return cards.find((card) => card.id === cardId) || null
   }
 
+  const exportBoards = () => {
+    const boards = all()
+    const json = JSON.stringify(boards, null, 2)
+    const blob = new Blob([json], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+
+    const currentDate = new Date()
+    const formattedDate = currentDate
+      .toLocaleString('en-CA', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      })
+      .replace(/[^\d]/g, '')
+
+    const fileName = `${formattedDate}_mykanban_boards.json`
+
+    const link = document.createElement('a')
+    link.href = url
+    link.download = fileName
+    link.click()
+
+    URL.revokeObjectURL(url)
+  }
+
   return {
     all,
     addBoard,
@@ -170,5 +198,6 @@ export const fBoard = () => {
     cardContentUpdate,
     getListById,
     getCardById,
+    // exportBoards,
   }
 }

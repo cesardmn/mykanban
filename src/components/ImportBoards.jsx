@@ -1,10 +1,12 @@
 import React, { useRef } from 'react'
 import Button from '@src/components/Button'
 import { fBoard } from '../helpers/index'
+import { useBoards } from '@providers/BoardsProvider'
 
 export default function ImportBoards() {
   const localBoards = fBoard()
   const fileInputRef = useRef(null)
+  const { setBoards } = useBoards()
 
   const handleButtonClick = () => {
     fileInputRef.current.click()
@@ -22,6 +24,7 @@ export default function ImportBoards() {
           if (isDataValid) {
             console.log('Conteúdo do arquivo:', content)
             content.forEach((board) => localBoards.addBoard(board))
+            setBoards(localBoards.all())
           } else {
             console.error('O arquivo JSON contém estruturas inválidas.')
           }

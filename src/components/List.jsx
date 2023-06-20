@@ -103,7 +103,7 @@ export default function List({ list }) {
       <ul
         id={list.id}
         name={list.name}
-        className={`${styles.cardList} ${styles.noScrollBar}`}
+        className={styles.cardList}
         draggable
         onDragOver={(e) => {
           handleDragOver(e)

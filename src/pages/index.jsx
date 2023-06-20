@@ -8,6 +8,7 @@ import Button from '@components/Button'
 import Logo from '@components/Logo'
 import ImportBoards from '@components/ImportBoards'
 import ActionButton from '@components/ActionButton'
+import TrashButton from '@src/components/TrashButton'
 
 // providers
 import { useBoards } from '@providers/BoardsProvider'
@@ -24,6 +25,11 @@ export default function Home() {
   const [editedBoardName, setEditedBoardName] = useState('')
 
   const [boardView, setBoardView] = useState()
+  const [selectedBoard, setSelectedBoard] = useState(false)
+
+  const handlePreview = () => {
+    setBoardView(null)
+  }
 
   useEffect(() => {
     const saveBoards = localBoards.all()
@@ -44,6 +50,7 @@ export default function Home() {
 
   const handleBoardView = (board) => {
     setBoardView(localBoards.getBoardById(board.id))
+    setSelectedBoard(!selectedBoard)
   }
 
   const handleDeleteBoard = (board) => {
@@ -53,35 +60,18 @@ export default function Home() {
   }
 
   const handleSaveBoardName = () => {
-    localBoards.boardNameUpdate(boardView.id, editedBoardName)
-    setOnEditBoardName(false)
-    setBoardView({ ...boardView, name: editedBoardName })
-    setBoards(localBoards.all())
+    const trimName = editedBoardName.trim()
+
+    if (trimName !== '') {
+      localBoards.boardNameUpdate(boardView.id, editedBoardName)
+      setOnEditBoardName(false)
+      setBoardView({ ...boardView, name: editedBoardName })
+      setBoards(localBoards.all())
+    }
   }
 
   const handleExportBoards = () => {
-    const boards = localBoards.all()
-    const json = JSON.stringify(boards, null, 2)
-    const blob = new Blob([json], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-
-    const currentDate = new Date()
-    const formattedDate = currentDate
-      .toLocaleString('pt-BR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-      .replace(/\//g, '')
-
-    const fileName = `${formattedDate}_mykanban_boards.json`
-
-    const link = document.createElement('a')
-    link.href = url
-    link.download = fileName
-    link.click()
-
-    URL.revokeObjectURL(url)
+    localBoards.exportBoards()
   }
 
   return (
@@ -94,7 +84,7 @@ export default function Home() {
       </Head>
       <main>
         <div className="menu">
-          <div className="logo">
+          <div className="logo" onClick={handlePreview}>
             <Logo />
           </div>
 
@@ -108,6 +98,7 @@ export default function Home() {
                     onClick={() => {
                       handleBoardView(board)
                     }}
+                    className={`boardListItem`}
                   >
                     {board.name}
                   </li>
@@ -131,7 +122,7 @@ export default function Home() {
         <div className="content">
           {boardView ? (
             <div className="boardDisplay">
-              <header>
+              <div className="header">
                 {onEditBoardName ? (
                   <input
                     type="text"
@@ -144,7 +135,8 @@ export default function Home() {
                       }
                     }}
                     onBlur={handleSaveBoardName}
-                    autoFocus // Adiciona o atributo autoFocus para fornecer o foco inicial
+                    autoFocus
+                    className="inputBoardName"
                   />
                 ) : (
                   <span
@@ -152,22 +144,27 @@ export default function Home() {
                       setOnEditBoardName(true)
                       setEditedBoardName(boardView.name)
                     }}
+                    className="boardTitle"
                   >
                     {boardView.name}
                   </span>
                 )}
+
                 <span
                   onClick={() => {
                     handleDeleteBoard(boardView)
                   }}
                 >
-                  del board
+                  <TrashButton />
                 </span>
-              </header>
+              </div>
               <Board boardViewSelected={boardView} />
             </div>
           ) : (
-            <span>preview</span>
+            <span className="preview">
+              teste
+              {/* <img src="/preview.gif" alt="" /> */}
+            </span>
           )}
         </div>
       </main>

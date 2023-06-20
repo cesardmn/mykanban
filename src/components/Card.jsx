@@ -61,7 +61,7 @@ export default function Card({ card }) {
   }
 
   return (
-    <div
+    <li
       className={styles.card}
       draggable
       onDrag={(e) => {
@@ -105,6 +105,6 @@ export default function Card({ card }) {
             : '+ add content'}
         </span>
       </div>
-    </div>
+    </li>
   )
 }

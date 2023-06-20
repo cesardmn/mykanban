@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react'
 export const DragCardContext = createContext({})
 
 export const DragCardProvider = (props) => {
-  const [dragCard, setDragCard] = useState(null)
+  const [dragCard, setDragCard] = useState([])
 
   return (
     <DragCardContext.Provider

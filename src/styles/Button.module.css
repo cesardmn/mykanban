@@ -14,10 +14,11 @@
   font-weight: bold;
   transition: 0.2s;
   cursor: pointer;
+  color: var(--dark-secondary);
+  font-size: var(--sm-2);
 }
 
 .actionButton:hover {
   background-color: var(--box-hover);
   scale: 1.02;
-  color: var(--text-light);
 }
