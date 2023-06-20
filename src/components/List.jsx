@@ -2,6 +2,8 @@ import { useRef, useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import { useBoards } from '@providers/BoardsProvider'
+import { useDragCard } from '@providers/DragCardProvider'
+
 import { fBoard } from '../helpers/index'
 import styles from '@styles/List.module.css'
 import TrashButton from './TrashButton'
@@ -16,6 +18,8 @@ export default function List({ list }) {
   const [editedListName, setEditedListName] = useState(list.name)
 
   const inputRef = useRef(null)
+
+  const { dragCard, setDragCard } = useDragCard()
 
   const handleInputFocus = () => {
     setIsEditingListName(true)
@@ -54,6 +58,23 @@ export default function List({ list }) {
     }
   }, [isEditingListName])
 
+  const handleDragOver = (e) => {
+    e.preventDefault()
+  }
+
+  const handleDrop = (e) => {
+    e.preventDefault()
+    const destinyListId = e.target.getAttribute('id')
+    const cardId = dragCard.id
+
+    const card = localBoards.getCardById(cardId)
+    localBoards.deleteCard(cardId)
+    card.list = destinyListId
+
+    localBoards.addCard(destinyListId, card)
+    setBoards(localBoards.all())
+  }
+
   return (
     <li className={styles.listContent}>
       <div className={styles.listHeader}>
@@ -79,7 +100,16 @@ export default function List({ list }) {
         </div>
       </div>
 
-      <ul className={`${styles.cardList} ${styles.noScrollBar}`}>
+      <ul
+        id={list.id}
+        name={list.name}
+        className={`${styles.cardList} ${styles.noScrollBar}`}
+        draggable
+        onDragOver={(e) => {
+          handleDragOver(e)
+        }}
+        onDrop={(e) => handleDrop(e)}
+      >
         {list.cards.map((card) => (
           <Card card={card} key={card.id} />
         ))}

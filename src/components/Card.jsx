@@ -1,5 +1,6 @@
 // providers
 import { useBoards } from '@providers/BoardsProvider'
+import { useDragCard } from '@providers/DragCardProvider'
 
 // lib and helpers
 import { fBoard } from '@src/helpers'
@@ -20,6 +21,8 @@ export default function Card({ card }) {
   const [showEditor, setShowEditor] = useState(false)
   const [isEditingName, setIsEditingName] = useState(false)
   const [editedName, setEditedName] = useState(cardView.name)
+
+  const { setDragCard } = useDragCard()
 
   const handleDeleteCard = () => {
     localBoards.deleteCard(cardView.id)
@@ -49,8 +52,23 @@ export default function Card({ card }) {
     setShowEditor(false)
   }
 
+  const handleDrag = (e) => {
+    e.preventDefault()
+  }
+
+  const handleDragSart = (e) => {
+    setDragCard(cardView)
+  }
+
   return (
-    <div className={styles.card}>
+    <div
+      className={styles.card}
+      draggable
+      onDrag={(e) => {
+        handleDrag(e)
+      }}
+      onDragStart={(e) => handleDragSart(e)}
+    >
       <div className={styles.headerCard}>
         {isEditingName ? (
           <input
