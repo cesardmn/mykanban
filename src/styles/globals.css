@@ -192,3 +192,31 @@ main {
   font-size: var(--md-2);
   color: var(--dark-complementary);
 }
+
+.content .preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+
+  gap: var(--md-3);
+}
+
+.preview h1 {
+  font-size: var(--lg-2);
+  color: var(--complementary);
+}
+
+.preview p {
+  font-style: italic;
+  font-size: var(--md-3);
+}
+
+.preview img {
+  height: auto;
+  width: 50%;
+  border-radius: var(--sm-2);
+  box-shadow: var(--shadow);
+}

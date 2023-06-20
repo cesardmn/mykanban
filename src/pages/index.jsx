@@ -77,7 +77,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>My Kanban</title>
+        <title>MyKanBan</title>
         <meta name="description" content="Organize your projects into board." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -161,13 +161,14 @@ export default function Home() {
               <Board boardViewSelected={boardView} />
             </div>
           ) : (
-            <span className="preview">
-              teste
-              {/* <img src="/preview.gif" alt="" /> */}
-            </span>
+            <div className="preview">
+              <h1>MyKanBan</h1>
+              <p>Organize your projects into board.</p>
+              <img src="/preview.gif" alt="" />
+            </div>
           )}
         </div>
       </main>
     </>
-  )
+  ) 
 }
