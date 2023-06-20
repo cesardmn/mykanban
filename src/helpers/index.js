@@ -6,9 +6,14 @@ export const fBoard = () => {
     const boards = all()
 
     if (boards) {
-      const newBoards = [board, ...boards]
-      newBoards.sort((a, b) => a.name.localeCompare(b.name))
-      localStorage.setItem('mk_boards', JSON.stringify(newBoards))
+      const isBoardExist = boards.some(
+        (existingBoard) => existingBoard.id === board.id
+      )
+      if (!isBoardExist) {
+        const newBoards = [board, ...boards]
+        newBoards.sort((a, b) => a.name.localeCompare(b.name))
+        localStorage.setItem('mk_boards', JSON.stringify(newBoards))
+      }
     } else {
       localStorage.setItem('mk_boards', JSON.stringify([board]))
     }

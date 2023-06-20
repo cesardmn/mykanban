@@ -2,8 +2,7 @@
 import styles from '@styles/Board.module.css'
 
 // components
-import AddListButton from './ActionButton'
-import ListContent from './ListContent'
+import Lists from './Lists'
 
 // libs
 import { v4 as uuidv4 } from 'uuid'
@@ -33,13 +32,7 @@ export default function Board({ boardViewSelected }) {
 
   return (
     <div className={styles.board}>
-      {boardView.lists.length > 0 &&
-        boardView.lists.map((list) => {
-          return <ListContent list={list} key={list.id} />
-        })}
-      <div className={styles.listWrapper}>
-        <AddListButton action={handleNewList}>+ add list</AddListButton>
-      </div>
+      <Lists boardViewSelected={boardViewSelected} />
     </div>
   )
 }

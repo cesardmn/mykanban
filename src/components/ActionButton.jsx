@@ -2,9 +2,9 @@
 import { useState, useEffect, useRef } from 'react'
 
 //styles
-import styles from '@styles/AddListButton.module.css'
+import styles from '@styles/ActionButton.module.css'
 
-export default function AddListButton({ children, action }) {
+export default function ActionButton({ children, action }) {
   const [form, setForm] = useState(false)
   const inputRef = useRef(null)
   const addButtonRef = useRef(null)

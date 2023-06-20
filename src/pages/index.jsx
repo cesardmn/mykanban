@@ -1,21 +1,34 @@
+// react and next
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
-import Board from '@src/components/Board'
-import Button from '@src/components/Button'
-import Logo from '@src/components/Logo'
-import AddListButton from '@src/components/ActionButton'
+
+// components
+import Board from '@components/Board'
+import Button from '@components/Button'
+import Logo from '@components/Logo'
+import ImportBoards from '@components/ImportBoards'
+import ActionButton from '@components/ActionButton'
+
+// providers
+import { useBoards } from '@providers/BoardsProvider'
+
+// lib and helpers
 import { v4 as uuidv4 } from 'uuid'
 import { fBoard } from '../helpers'
-import { useBoards } from '@providers/BoardsProvider'
-import { useBoardView } from '@providers/BoardViewProvider'
 
 export default function Home() {
   const localBoards = fBoard()
   const { boards, setBoards } = useBoards()
-  const { boardView, setBoardView } = useBoardView()
 
   const [onEditBoardName, setOnEditBoardName] = useState(false)
   const [editedBoardName, setEditedBoardName] = useState('')
+
+  const [boardView, setBoardView] = useState()
+
+  useEffect(() => {
+    const saveBoards = localBoards.all()
+    setBoards(saveBoards)
+  }, [])
 
   const handleNewBoard = (name) => {
     const board = {
@@ -30,7 +43,7 @@ export default function Home() {
   }
 
   const handleBoardView = (board) => {
-    setBoardView(board)
+    setBoardView(localBoards.getBoardById(board.id))
   }
 
   const handleDeleteBoard = (board) => {
@@ -45,10 +58,6 @@ export default function Home() {
     setBoardView({ ...boardView, name: editedBoardName })
     setBoards(localBoards.all())
   }
-
-  useEffect(() => {
-    setBoards(localBoards.all())
-  }, [])
 
   const handleExportBoards = () => {
     const boards = localBoards.all()
@@ -107,8 +116,10 @@ export default function Home() {
           </ul>
 
           <div className="boardActions">
-            <AddListButton action={handleNewBoard}>New</AddListButton>
-            <Button>import</Button>
+            <ActionButton action={handleNewBoard}>New</ActionButton>
+
+            <ImportBoards />
+
             {boards && (
               <div onClick={handleExportBoards}>
                 <Button>export</Button>

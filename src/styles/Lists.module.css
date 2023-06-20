@@ -1,0 +1,13 @@
+.listsWrapper {
+  /* background-color: brown; */
+  height: 100%;
+  width: auto;
+  display: flex;
+}
+
+.addListButtonWrapper {
+  height: auto;
+  width: 227px;
+  min-width: 227px;
+  margin-left: var(--sm-2);
+}

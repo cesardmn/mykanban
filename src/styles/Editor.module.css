@@ -25,6 +25,10 @@
   margin-bottom: 10px;
 }
 
+.header h4 {
+  font-size: var(--md-1);
+}
+
 .editor {
   height: 400px;
 }

@@ -8,44 +8,9 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
   padding: var(--sm-2);
+  padding-left: 0;
 }
 
 .board::-webkit-scrollbar {
   display: none;
-}
-
-.listWrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 267px;
-  min-width: 267px;
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  margin-left: var(--sm-2);
-}
-
-.listWrapper::-webkit-scrollbar {
-  display: none;
-}
-
-.addListButton {
-  height: auto;
-  width: 257px;
-  border: transparent;
-  outline: transparent;
-  padding: var(--md-1);
-  background-color: #35323248;
-  border-radius: var(--sm-2);
-  color: var(--text-light);
-  font-size: var(--md-1);
-  text-align: left;
-  box-shadow: var(--shadow);
-  transition: 0.2s;
-  cursor: pointer;
-}
-
-.addListButton:hover {
-  background-color: #3532327c;
 }

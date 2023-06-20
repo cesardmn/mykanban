@@ -4,15 +4,12 @@ import { useQuill } from 'react-quilljs'
 import styles from '@styles/Editor.module.css'
 import { fBoard } from '@src/helpers'
 
-export default function Editor({
-  closeEditor,
-  card,
-  listView,
-  listViewUpdate,
-}) {
+export default function Editor({ closeEditor, card }) {
   const { quill, quillRef } = useQuill()
   const editorElementRef = useRef(null)
   const localBoards = fBoard()
+
+  const cardView = localBoards.getCardById(card.id)
 
   useEffect(() => {
     if (quill) {
@@ -22,23 +19,7 @@ export default function Editor({
           pure: editorElementRef.current.textContent,
           formatted: text,
         }
-        localBoards.cardContentUpdate(card.id, updatedContent)
-
-        // Atualiza o conteúdo do card no listView
-        const updatedCards = listView.cards.map((c) => {
-          if (c.id === card.id) {
-            return {
-              ...c,
-              content: updatedContent,
-            }
-          }
-          return c
-        })
-        const updatedListView = {
-          ...listView,
-          cards: updatedCards,
-        }
-        listViewUpdate(updatedListView)
+        localBoards.cardContentUpdate(cardView.id, updatedContent)
       }
 
       quill.on('text-change', handleTextChange)
@@ -49,7 +30,7 @@ export default function Editor({
         quill.off('text-change', handleTextChange)
       }
     }
-  }, [quill, card, localBoards, listView, listViewUpdate])
+  }, [quill, cardView, localBoards])
 
   useEffect(() => {
     const handleEscapeKeyPress = (event) => {
@@ -73,13 +54,13 @@ export default function Editor({
     }
   }, [closeEditor])
 
-  const formattedContent = card.content.formatted || ''
+  const formattedContent = cardView.content.formatted || ''
 
   return (
     <div className={styles.modalBackdrop}>
       <div className={styles.modal}>
         <div className={styles.header}>
-          <h4>{card.name}</h4>
+          <h4>{cardView.name}</h4>
         </div>
         <div className={styles.editor}>
           <div

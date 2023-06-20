@@ -1,0 +1,66 @@
+.listContent {
+  height: auto;
+  width: 227px;
+  min-width: 227px;
+  margin-left: var(--sm-2);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--sm-2);
+  padding: var(--sm-2);
+  background-color: var(--text-bolder);
+  box-shadow: var(--shadow);
+  border-radius: var(--sm-2);
+}
+
+.listHeader {
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.listHeader h3 {
+  height: auto;
+  width: 90%;
+  text-transform: uppercase;
+  font-size: var(--sm-3);
+  padding: var(--sm-1);
+}
+
+.listHeader input {
+  height: auto;
+  width: 90%;
+  background-color: transparent;
+  outline: transparent;
+  border: transparent;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: var(--sm-3);
+}
+
+.listHeader input:focus {
+  height: auto;
+  background-color: var(--text-light);
+  outline: var(--complementary);
+}
+
+.listHeader input:focus:placeholder {
+  color: var(--text-light);
+}
+
+.cardList {
+  height: 100%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sm-2);
+}
+
+.noScrollBar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.noScrollBar::-webkit-scrollbar {
+  display: none;
+}
