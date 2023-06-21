@@ -1,10 +1,10 @@
 # MyKanBan
 
-<p>Desenvolvido em Next.js, <b>MyKanBan</b> é uma aplicação que utiliza recursos como <em>Drag and drop</em>, <em>Context API</em> e <em>Rich Text</em>, para criar um quadro Kanban intuitivo que permite gerenciar suas tarefas de forma prática</p>
+<p>Developed in Next.js, <b>MyKanBan</b> is an application that utilizes features such as <b><em>Drag and drop</em></b>, <b><em>Context API</em></b>, and <b><em>Rich Text</em></b> to create an intuitive Kanban board that allows you to manage your tasks conveniently.</p>
 
-<p>Você pode criar vários quadros, listas e cartões de tarefas em poucos cliques.</p>
+<p>You can create multiple boards, lists, and task cards with just a few clicks.</p>
 
-<p>Os dados ficam salvos em localStorage ou você pode exportar em um arquivo json para importar depois.</p>
+<p>The data is stored in localStorage, or you can export it as a JSON file to import later.</p>
 
 <br>
 
@@ -12,7 +12,7 @@
 
 ![home preview](./public/preview.gif)
 
-## [>> Try it <<](https://cesardmn.github.io/gitshow)
+## [>> Try it <<](https://cesardmn.github.io/mykanban)
 
 <br>
 
