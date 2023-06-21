@@ -20,7 +20,7 @@ export default function List({ list }) {
 
   const inputRef = useRef(null)
 
-  const { dragCard, setDragCard } = useDragCard()
+  const { dragCard } = useDragCard()
 
   const handleInputFocus = () => {
     setIsEditingListName(true)
@@ -62,7 +62,6 @@ export default function List({ list }) {
 
   const handleDragOver = (e) => {
     e.preventDefault()
-
     setDestinyOver(e.target.getAttribute('dragtype'))
   }
 
@@ -71,13 +70,10 @@ export default function List({ list }) {
     const destinyListId = e.target.getAttribute('id')
     const cardId = dragCard.id
 
-    console.log(destinyOver)
-
     if (destinyOver === 'listCard') {
       const card = localBoards.getCardById(cardId)
       localBoards.deleteCard(cardId)
       card.list = destinyListId
-
       localBoards.addCard(destinyListId, card)
       setBoards(localBoards.all())
     }

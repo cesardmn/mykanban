@@ -42,3 +42,7 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+.runDrag {
+  background-color: var(--box);
+}

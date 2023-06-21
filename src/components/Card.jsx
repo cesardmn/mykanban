@@ -21,6 +21,7 @@ export default function Card({ card }) {
   const [showEditor, setShowEditor] = useState(false)
   const [isEditingName, setIsEditingName] = useState(false)
   const [editedName, setEditedName] = useState(cardView.name)
+  const [runDrag, setRunDrag] = useState(false)
 
   const { setDragCard } = useDragCard()
 
@@ -56,19 +57,27 @@ export default function Card({ card }) {
     e.preventDefault()
   }
 
-  const handleDragSart = (e) => {
+  const handleDragStart = (e) => {
     setDragCard(cardView)
+    setRunDrag(true)
+  }
+
+  const handleDragEnd = (e) => {
+    setRunDrag(false)
   }
 
   return (
     <li
+      id={card.id}
       dragtype="card"
-      className={styles.card}
+      className={`
+      ${styles.card} 
+      ${runDrag && styles.runDrag}
+      `}
       draggable
-      onDrag={(e) => {
-        handleDrag(e)
-      }}
-      onDragStart={(e) => handleDragSart(e)}
+      onDrag={(e) => handleDrag(e)}
+      onDragStart={(e) => handleDragStart(e)}
+      onDragEnd={(e) => handleDragEnd(e)}
     >
       <div className={styles.headerCard}>
         {isEditingName ? (
