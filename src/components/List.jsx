@@ -46,6 +46,7 @@ export default function List({ list }) {
       },
       list: list.id,
       createdAt: Date.now(),
+      type: 'card'
     }
 
     localBoards.addCard(list.id, newCard)

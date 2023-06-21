@@ -23,6 +23,7 @@ export default function Lists({ boardViewSelected }) {
       cards: [],
       board: boardViewSelected.id,
       createdAt: Date.now(),
+      type: 'list'
     }
     localBoards.addList(boardViewSelected.id, list)
     setBoards(localBoards.all())
