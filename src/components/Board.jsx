@@ -6,7 +6,7 @@ import Lists from './Lists'
 
 export default function Board({ boardViewSelected }) {
   return (
-    <div className={styles.board}>
+    <div className={styles.board} dragtype="board">
       <Lists boardViewSelected={boardViewSelected} />
     </div>
   )

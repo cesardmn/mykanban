@@ -42,7 +42,7 @@ export default function Home() {
       name,
       lists: [],
       createdAt: Date.now(),
-      type: 'board'
+      type: 'board',
     }
 
     localBoards.addBoard(board)

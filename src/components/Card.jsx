@@ -62,6 +62,7 @@ export default function Card({ card }) {
 
   return (
     <li
+      dragtype="card"
       className={styles.card}
       draggable
       onDrag={(e) => {

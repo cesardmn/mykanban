@@ -16,6 +16,7 @@ export default function List({ list }) {
 
   const [isEditingListName, setIsEditingListName] = useState(false)
   const [editedListName, setEditedListName] = useState(list.name)
+  const [destinyOver, setDestinyOver] = useState()
 
   const inputRef = useRef(null)
 
@@ -46,7 +47,7 @@ export default function List({ list }) {
       },
       list: list.id,
       createdAt: Date.now(),
-      type: 'card'
+      type: 'card',
     }
 
     localBoards.addCard(list.id, newCard)
@@ -61,6 +62,8 @@ export default function List({ list }) {
 
   const handleDragOver = (e) => {
     e.preventDefault()
+
+    setDestinyOver(e.target.getAttribute('dragtype'))
   }
 
   const handleDrop = (e) => {
@@ -68,16 +71,20 @@ export default function List({ list }) {
     const destinyListId = e.target.getAttribute('id')
     const cardId = dragCard.id
 
-    const card = localBoards.getCardById(cardId)
-    localBoards.deleteCard(cardId)
-    card.list = destinyListId
+    console.log(destinyOver)
 
-    localBoards.addCard(destinyListId, card)
-    setBoards(localBoards.all())
+    if (destinyOver === 'listCard') {
+      const card = localBoards.getCardById(cardId)
+      localBoards.deleteCard(cardId)
+      card.list = destinyListId
+
+      localBoards.addCard(destinyListId, card)
+      setBoards(localBoards.all())
+    }
   }
 
   return (
-    <li className={styles.listContent}>
+    <li className={styles.listContent} dragtype="list">
       <div className={styles.listHeader}>
         {isEditingListName ? (
           <input
@@ -103,6 +110,7 @@ export default function List({ list }) {
 
       <ul
         id={list.id}
+        dragtype="listCard"
         name={list.name}
         className={styles.cardList}
         draggable
