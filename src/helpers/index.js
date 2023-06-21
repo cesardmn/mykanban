@@ -198,6 +198,6 @@ export const fBoard = () => {
     cardContentUpdate,
     getListById,
     getCardById,
-    // exportBoards,
+    exportBoards,
   }
 }
